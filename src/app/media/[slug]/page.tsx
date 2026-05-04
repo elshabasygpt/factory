@@ -1,4 +1,5 @@
 "use client";
+import DOMPurify from 'isomorphic-dompurify';
 
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
@@ -162,7 +163,7 @@ export default function NewsDetailPage() {
                         <div
                             className="prose prose-lg max-w-none prose-headings:font-black prose-headings:text-gray-900 prose-p:text-gray-600 prose-p:leading-relaxed prose-li:text-gray-600 prose-strong:text-gray-800 prose-a:text-green-700 hover:prose-a:text-green-800 mb-12"
                             style={{ direction: isRTL ? "rtl" : "ltr" }}
-                            dangerouslySetInnerHTML={{ __html: content }}
+                            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(content) }}
                         />
                     </ScrollReveal>
 

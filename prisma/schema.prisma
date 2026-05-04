@@ -76,6 +76,7 @@ model PageContent {
   content   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  version   Int      @default(1)
 }
 
 model PageContentHistory {
