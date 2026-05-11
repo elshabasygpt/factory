@@ -33,8 +33,14 @@ async function sync() {
             const { id, categoryId, createdAt, updatedAt, ...rest } = p;
             
             // First we need to make sure categories match
-            const localCat = await localPrisma.category.findUnique({ where: { id: categoryId } });
-            let remoteCat = await remotePrisma.category.findUnique({ where: { slug: localCat?.slug } });
+            let localCat = null;
+            if (categoryId) {
+                localCat = await localPrisma.category.findUnique({ where: { id: categoryId } });
+            }
+            let remoteCat = null;
+            if (localCat?.slug) {
+                remoteCat = await remotePrisma.category.findUnique({ where: { slug: localCat.slug } });
+            }
             
             if (!remoteCat && localCat) {
                 remoteCat = await remotePrisma.category.create({
